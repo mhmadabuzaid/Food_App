@@ -3,30 +3,59 @@ import 'package:resturant/models/meals.dart';
 import 'package:resturant/widgets/meal_item.dart';
 
 class Mealsscreen extends StatelessWidget {
-  const Mealsscreen({super.key, required this.meals, required this.title});
-  final String title;
+  const Mealsscreen({
+    super.key,
+    required this.meals,
+    this.title,
+    required this.onFavourite,
+  });
+
+  final String? title;
   final List<Meal> meals;
+  final void Function(Meal meal) onFavourite;
 
   @override
   Widget build(BuildContext context) {
-    Widget Emptycontent = Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text('Nothing here '),
-        SizedBox(height: 16),
-        Text('check other catagory'),
-      ],
-    );
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: meals.isEmpty
-          ? Emptycontent
-          : ListView.builder(
-              itemCount: meals.length,
-              itemBuilder: (ctx, index) {
-                return MealItem(meal: meals[index]);
-              },
+    // 1. Define your content separately
+    Widget content = meals.isEmpty
+        ? Center(
+            // Added Center so the message isn't stuck at the top
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Nothing here',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.headlineLarge!.copyWith(color: Colors.white),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Add Some Favourite Meals',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyLarge!.copyWith(color: Colors.white),
+                ),
+              ],
             ),
+          )
+        : ListView.builder(
+            itemCount: meals.length,
+            itemBuilder: (ctx, index) {
+              return MealItem(meal: meals[index], onFavourite: onFavourite);
+            },
+          );
+
+    // 2. THE LOGIC:
+    // If title is null, return ONLY the content (for Tabs).
+    if (title == null) {
+      return content;
+    }
+
+    // If title is NOT null, return the full Scaffold (for Category selection).
+    return Scaffold(
+      appBar: AppBar(title: Text(title!)),
+      body: content,
     );
   }
 }

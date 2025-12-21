@@ -5,9 +5,10 @@ import 'package:resturant/widgets/mealtrait.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealItem extends StatelessWidget {
-  const MealItem({required this.meal, super.key});
+  const MealItem({required this.meal, super.key,required this.onFavourite});
 
   final Meal meal;
+  final void Function(Meal meal) onFavourite;
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +19,7 @@ class MealItem extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  Mealinfo(meal: meal),
-            ),
+            MaterialPageRoute(builder: (context) => Mealinfo(meal: meal,onFavourite: onFavourite,)),
           );
         },
         child: Stack(
