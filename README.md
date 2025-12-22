@@ -60,4 +60,3 @@ I built this project using **Flutter** and **Dart**, focusing on a component-dri
 
 ---
 
-*Built with ❤️ using Flutter.*
