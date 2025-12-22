@@ -3,10 +3,10 @@ import 'package:resturant/main.dart';
 import 'package:resturant/models/meals.dart';
 import 'package:resturant/screens/catagoriesscreen.dart';
 import 'package:resturant/screens/mealsscreen.dart';
+import 'package:resturant/widgets/main_drawer.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
-  
 
   @override
   State<TabsScreen> createState() => _TabsScreenState();
@@ -23,25 +23,50 @@ class _TabsScreenState extends State<TabsScreen> {
     });
   }
 
+  void showAdded(String message) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), duration: Duration(seconds: 1)),
+    );
+  }
+
   void addfavourite(Meal meal) {
     if (favouriteMeals.contains(meal)) {
-      favouriteMeals.remove(meal);
+      setState(() {
+        favouriteMeals.remove(meal);
+      });
+      showAdded('Meal was removed');
     } else {
-      favouriteMeals.add(meal);
+      setState(() {
+        favouriteMeals.add(meal);
+      });
+      showAdded('Meal was added');
+    }
+  }
+
+  void setScreen(String screen) {
+    if (screen == 'filters') {
+      
+    } else {
+      Navigator.of(context).pop();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget activeScreen =  Catagoriesscreen(onFavourite: addfavourite);
+    Widget activeScreen = Catagoriesscreen(onFavourite: addfavourite);
     var activePageTitle = 'Categories'; // Optional: Change title dynamically
 
     if (selectedIndex == 1) {
-      activeScreen =  Mealsscreen(meals: favouriteMeals,onFavourite:addfavourite,);
+      activeScreen = Mealsscreen(
+        meals: favouriteMeals,
+        onFavourite: addfavourite,
+      );
       activePageTitle = 'Your Favorites';
     }
 
     return Scaffold(
+      drawer: MainDrawer(setScreen: setScreen,),
       appBar: AppBar(title: Text(activePageTitle)),
       body: activeScreen,
       bottomNavigationBar: BottomNavigationBar(
