@@ -6,13 +6,14 @@ import 'package:resturant/screens/mealsscreen.dart';
 import 'package:resturant/widgets/catagory_grid_item.dart';
 
 class Catagoriesscreen extends StatelessWidget {
-  const Catagoriesscreen({super.key, required this.onFavourite});
+  const Catagoriesscreen({super.key, required this.onFavourite,required this.selectedFilterMeals});
   final void Function(Meal meal) onFavourite;
+  final List<Meal> selectedFilterMeals;
 
   @override
   Widget build(BuildContext context) {
     void selectedCatagory(Catagory catagory) {
-      final filteredMeals = dummyMeals
+      final filteredMeals = selectedFilterMeals
           .where((meal) => meal.categories.contains(catagory.id))
           .toList();
 
