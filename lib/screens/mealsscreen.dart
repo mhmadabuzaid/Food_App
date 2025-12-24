@@ -8,12 +8,10 @@ class Mealsscreen extends StatelessWidget {
     super.key,
     required this.meals,
     this.title,
-    required this.onFavourite,
   });
 
   final String? title;
   final List<Meal> meals;
-  final void Function(Meal meal) onFavourite;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +41,7 @@ class Mealsscreen extends StatelessWidget {
         : ListView.builder(
             itemCount: meals.length,
             itemBuilder: (ctx, index) {
-              return MealItem(meal: meals[index], onFavourite: onFavourite);
+              return MealItem(meal: meals[index]);
             },
           );
 

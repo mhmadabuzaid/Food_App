@@ -6,8 +6,7 @@ import 'package:resturant/screens/mealsscreen.dart';
 import 'package:resturant/widgets/catagory_grid_item.dart';
 
 class Catagoriesscreen extends StatelessWidget {
-  const Catagoriesscreen({super.key, required this.onFavourite,required this.selectedFilterMeals});
-  final void Function(Meal meal) onFavourite;
+  const Catagoriesscreen({super.key, required this.selectedFilterMeals});
   final List<Meal> selectedFilterMeals;
 
   @override
@@ -22,7 +21,7 @@ class Catagoriesscreen extends StatelessWidget {
           builder: (ctx) => Mealsscreen(
             meals: filteredMeals,
             title: catagory.title,
-            onFavourite: onFavourite,
+            
           ),
         ),
       );
