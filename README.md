@@ -16,11 +16,16 @@ A complete meal filtering and selection app built with Flutter. This application
 
 ## 🛠️ Tech Stack & Key Widgets
 
-I built this project using **Flutter** and **Dart**, focusing on a component-driven architecture. Here are some of the key widgets and techniques I implemented:
+I built this project using **Flutter** and **Dart**, focusing on a component-driven architecture. Recently, I migrated the state management to **Riverpod** for a more scalable and testable codebase.
+
+### State Management & Logic
+* **Flutter Riverpod**: Replaced standard `setState` with Riverpod for efficient global state management.
+    * **`StateNotifierProvider`**: Used to manage complex state logic for **Filters** and **Favorite Meals**, ensuring the UI updates automatically across different screens without manually passing data down the widget tree.
+    * **`Provider`**: Used for serving static data (Dummy Meals) efficiently.
+    * **`ConsumerWidget` / `ConsumerStatefulWidget`**: Implemented to listen to state changes via `ref.watch` and `ref.read`.
 
 ### Navigation & Structure
 * **`Scaffold`**: Used as the base structure for all screens, managing AppBars, Drawers, and BottomNavigationBars.
-* **`TabsScreen` (State Management)**: Implemented the "Lifted State Up" pattern here. This screen acts as the central controller, managing the state for selected filters and favorite meals across the entire app.
 * **`Drawer`**: A custom side-navigation menu for accessing the Filters screen.
 * **`PopScope`**: Implemented manual back-navigation control in the Filters screen to ensure user preferences are saved and passed back correctly before closing the screen.
 
@@ -56,6 +61,7 @@ I built this project using **Flutter** and **Dart**, focusing on a component-dri
 * `lib/models/`: Data blueprints (Meal, Category).
 * `lib/screens/`: Full-page views (Categories, Meals, Filters, Tabs).
 * `lib/widgets/`: Reusable UI components (MealItem, CategoryGridItem, MainDrawer).
+* `lib/provider/`: Riverpod providers for managing app state (Meals, Favorites, Filters).
 * `lib/data/`: Dummy data source for testing UI logic.
 
 ---
