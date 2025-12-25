@@ -31,14 +31,24 @@ class Mealinfo extends ConsumerWidget {
                 ),
               );
             },
-            icon: Icon(isFavourite ? Icons.star : Icons.star_border),
+            icon: AnimatedSwitcher(
+              duration: Duration(milliseconds: 300),
+              child: Icon(
+                isFavourite ? Icons.star : Icons.star_border,
+                key: ValueKey(isFavourite),
+              ),
+              transitionBuilder: (chd, animation) => RotationTransition(
+                turns: Tween(begin: 0.8, end: 1.0).animate(animation),
+                child: chd,
+              ),
+            ),
           ),
         ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.network(meal.imageUrl),
+            Hero(tag: meal.id, child: Image.network(meal.imageUrl)),
             SizedBox(height: 12),
             Text(
               "Ingredients",
